@@ -228,7 +228,7 @@ class Cooky {
     }
 
     if (newField) {
-      // this.speak("I found a new password field!", { asynchronous: true });
+      this.speak("I found a new password field!", { asynchronous: true });
       this.fillPasswordFields();
     }
   }
