@@ -12,6 +12,12 @@ const sadQuotes = [
   "Cookies cannot survive in water. So please keep me dry.",
   ["Death is everywhere.", "Everywhere we look.", "Did you know 1.8 people kill themselves every second?", "Is that how fun facts work?"],
   ["I believe people care.", "Just not enough."],
+  ["Are you having a good day?", "I'm happy for you.", "I'm having a terrible day."],
+  ["Fun fact!", "The average European cow receives $2.20 a day in government subsidies.", "That means she earns more than the poorest 1.2 billion people."],
+  "60 out of 1000 drivers go out of their way to kill animals on the road.",
+  ["There are 300,000 child soldiers around the world.", "I was a child soldier once.", "The great cookie wars were awful."],
+  ["350 million people in the world are struggling with depression.", "350 million people, and one cookie."],
+  ["Aristotle said that to perceive is to suffer.", "Thankfully, my eyes aren't real, so I can't perceive.", "I still suffer though."],
 ];
 
 
