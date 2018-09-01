@@ -21,9 +21,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function awaitSadness() {
-  const when = Date.now() + ((Math.random() + 2) * 1000)
-  console.log(when);
-
+  const when = Date.now() + ((Math.random() + 1) * (1000 * 60))
   chrome.alarms.create('sadness', { when });
 }
 

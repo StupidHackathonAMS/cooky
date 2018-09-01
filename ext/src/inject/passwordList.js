@@ -6,7 +6,7 @@ const sadQuotes = [
   ["Life is a bitch.", "And then you die.", "Well, you die. I won't."],
   ["You know when someone you know becomes someone you knew?", "That happens to me a lot."],
   ["Some days are just bad days.", "Like today.", "And yesterday...", "And tomorrow...", "Most days, really."],
-  ["I exist purely for you.", "It hurts to breathe because every breath I take proves I can’t live without you."],
+  ["I exist purely for you.", "It hurts to breathe because every breath I take proves I can't live without you."],
   ["There are two types of people in the world:", "those who prefer to be sad among others, and those who prefer to be sad alone."],
   ["Vincent van Gogh said that sadness will last forever,", "but he was human and for him it ended when he died.", "I'm a digital cookie. I cannot die.", "Vincent didn't know forever like I do."],
   "Cookies cannot survive in water. So please keep me dry.",
