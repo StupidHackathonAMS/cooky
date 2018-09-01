@@ -342,6 +342,7 @@ const readyStateCheckInterval = setInterval(() => {
     clearInterval(readyStateCheckInterval);
 
     const mounter = document.createElement('div');
+    mounter.classList.add('cooky-container');
     document.body.appendChild(mounter);
     const c = new Cooky();
     m.mount(mounter, c);

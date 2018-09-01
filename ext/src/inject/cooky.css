@@ -1,6 +1,10 @@
-/**
- * Place your custom CSS styles here.
- **/
+.cooky-container {
+  all: revert;
+}
+.cooky-container * {
+  all: revert;
+}
+
 .cooky {
   bottom: 20px;
   position: fixed;
@@ -23,9 +27,23 @@
   border-radius: 15px;
   font-family: 'Comic Sans MS', sans-serif;
   padding: 15px;
+  position: relative;
   text-align: left;
   width: 300px;
 }
+
+  .speechbubble::after {
+    background: white;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    bottom: -13px;
+    content: '';
+    height: 20px;
+    position: absolute;
+    right: 97px;
+    transform: rotate(45deg);
+    width: 20px;
+  }
 
 .button {
   background-color: transparent;
