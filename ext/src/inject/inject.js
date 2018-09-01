@@ -97,6 +97,7 @@ class Cooky {
         setTimeout( () => {
           console.log('toCheckout');
           document.querySelector('[data-reactid="1026"]').click();
+          this.checkingOutCookie();
         }, 100);
       }, 1000);
     }, 3000);
