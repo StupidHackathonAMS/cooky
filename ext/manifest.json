@@ -1,9 +1,9 @@
 {
-  "name": "CHANGE THIS : Extension boilerplate",
+  "name": "Cooky",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension was created with the awesome extensionizr.com",
-  "homepage_url": "http://extensionizr.com",
+  "description": "A terrible friend.",
+  "homepage_url": "https://cooky.com",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -15,7 +15,6 @@
     "persistent": true
   },
   "permissions": [
-    "chrome://favicon/",
     "clipboardRead",
     "clipboardWrite",
     "contextMenus",
@@ -25,26 +24,26 @@
     "notifications",
     "tabs",
     "https://*/*",
-    " http://*/*"
+    "http://*/*"
   ],
   "omnibox": {
     "keyword": "extensionizr"
   },
+  "web_accessible_resources": [
+    "src/img/*"
+  ],
   "content_scripts": [
     {
       "matches": [
-        "https://www.google.com/*"
-      ],
-      "css": [
-        "src/inject/inject.css"
-      ]
-    },
-    {
-      "matches": [
-        "https://www.google.com/*"
+        "http://*/*",
+        "https://*/*"
       ],
       "js": [
+        "src/inject/mithril.js",
         "src/inject/inject.js"
+      ],
+      "css": [
+        "src/inject/cooky.css"
       ]
     }
   ]

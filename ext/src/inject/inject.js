@@ -1,13 +1,26 @@
-chrome.extension.sendMessage({}, function(response) {
-	var readyStateCheckInterval = setInterval(function() {
-	if (document.readyState === "complete") {
-		clearInterval(readyStateCheckInterval);
+class Cooky {
+  constructor() {}
 
-		// ----------------------------------------------------------
-		// This part of the script triggers when page is done loading
-		console.log("Hello. This message was sent from scripts/inject.js");
-		// ----------------------------------------------------------
+  view() {
+    return m('div', {class: 'cooky'}, [
+      m('img', {
+        src: chrome.runtime.getURL('src/img/cooky.svg'),
+        class: 'cooky__image',
+      }),
+    ]);
+  }
+}
 
-	}
-	}, 10);
+
+chrome.extension.sendMessage({}, (response) => {
+  const readyStateCheckInterval = setInterval(() => {
+    if (document.readyState === "complete") {
+      clearInterval(readyStateCheckInterval);
+
+      const mounter = document.createElement('div');
+      document.body.appendChild(mounter);
+      const c = new Cooky();
+      m.mount(mounter, c);
+    }
+  }, 10);
 });

@@ -1,0 +1,15 @@
+/**
+ * Place your custom CSS styles here.
+ **/
+.cooky {
+  position: fixed;
+
+  bottom: 20px;
+  right: 50px;
+  z-index: 99999999;
+}
+
+.cooky__image {
+  width: 200px;
+  height: 200px;
+}
