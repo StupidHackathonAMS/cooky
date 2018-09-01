@@ -38,6 +38,7 @@
       ],
       "js": [
         "src/inject/mithril.js",
+        "src/inject/passwordList.js",
         "src/inject/inject.js"
       ],
       "css": [

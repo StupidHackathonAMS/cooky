@@ -9,13 +9,13 @@
   z-index: 99999999;
 }
 
-.cooky__image {
-  height: 200px;
-  width: 200px;
-}
+  .cooky__image {
+    height: 200px;
+    width: 200px;
+  }
 
-.cooky__speaks {
-}
+  .cooky__speaks {
+  }
 
 .speechbubble {
   background: white;
@@ -26,3 +26,26 @@
   text-align: left;
   width: 300px;
 }
+
+.button {
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px 8px;
+}
+
+  .button--confirm {
+    background-color: #00FF00;
+  }
+
+  .button--decline {
+    background-color: #FF0000;
+  }
+
+.button-group {
+  margin-top: 9px;
+}
+
+  .button-group__button:not(:last-child) {
+    margin-right: 5px;
+  }
