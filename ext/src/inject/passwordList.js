@@ -1,3 +1,31 @@
+const phrases = {
+  'you-want-cookies': [
+    "Oh, you want cookies! Let me help you with that if you please. Just enter your address.",
+    "I saw that you like cookies. Let me get you some real cookies. Please enter your address!",
+    "You want cookies, eh? Enter your address, and I'll get you some real cookies.",
+  ],
+  'adding-cookie': [
+    "Great, thanks. Let me add that cookie for you, hold on.",
+    "Good job! I'll take care of the rest.",
+    "You remembered all that? I'm impressed. Now, let me see...",
+  ],
+  'cookie-check-out': [
+    "Niiice, now just log in and finish the order. You will be able to eat my pals soon!",
+    "Oh no! I think I forgot your password... And your credit card details. Can you take over, please?",
+    "This part is up to you. But then you can eat my friends. Like I did, back in the war!",
+  ],
+  'password-field-found': [
+    "I found a new password field!",
+    "Is that a password field I see?",
+    "That looks a lot like a password field.",
+  ],
+  'generate-password-offer': [
+    "I'm super good at coming up with passwords. Do you want me to fill out this password for you?",
+    "Ask anyone, I make up the best passwords. Many people have said it. Let me get this one for you.",
+    "Oh hey! Thinking of passwords is literally one of my favourite things. Can I? Please?",
+  ],
+};
+
 const sadQuotes = [
   "I'm doing my best, but I'm getting the feeling it's not good enough.",
   "I miss my mom.",
@@ -19,7 +47,6 @@ const sadQuotes = [
   ["350 million people in the world are struggling with depression.", "350 million people, and one cookie."],
   ["Aristotle said that to perceive is to suffer.", "Thankfully, my eyes aren't real, so I can't perceive.", "I still suffer though."],
 ];
-
 
 const passwordList = [
   // most common passwords of 2017

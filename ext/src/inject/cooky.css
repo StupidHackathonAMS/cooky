@@ -1,12 +1,6 @@
-.cooky-container {
-  all: revert;
-}
-.cooky-container * {
-  all: revert;
-}
-
 .cooky {
   bottom: 20px;
+  font-size: 16px;
   position: fixed;
   right: 50px;
   text-align: right;

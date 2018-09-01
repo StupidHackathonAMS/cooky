@@ -1,3 +1,7 @@
+function getPhrase(name) {
+  return phrases[name][Math.floor(Math.random() * phrases[name].length)];
+}
+
 function generatePassword() {
   let original = passwordList[Math.floor(Math.random() * passwordList.length)];
   original = original.toLowerCase();
@@ -200,7 +204,7 @@ class Cooky {
       var addressInput = document.querySelector('[placeholder="Enter your address"]');
       if (addressInput !== undefined) {
         clearInterval(addressInputInterval);
-        this.speak('Oh, you want cookies! Let me help you with that if you please. Just enter your address.', { asynchronous: true });
+        this.speak(getPhrase('you-want-cookies'), { asynchronous: true });
         addressInput.focus();
         addressInput.addEventListener("blur", (event) => {
           this.addCookieToBasket();
@@ -213,7 +217,7 @@ class Cooky {
    * Add the cookie to the basket and go to checkout
    */
   addCookieToBasket() {
-    this.speak('Great, thanks. Let me add that cookie for you, hold on.', { asynchronous: true });
+    this.speak(getPhrase('adding-cookie'), { asynchronous: true });
     setTimeout( () => {
       var checkoutButton = document.querySelector('button[disabled]');
       document.querySelector('[title="Triple Chocolate Cookie"]').click();
@@ -231,7 +235,7 @@ class Cooky {
    * Compliment on the progress
    */
   checkingOutCookie() {
-    this.speak('Niiice, now just log in and finish the order. You will be able to eat my pals soon!', { asynchronous: true })
+    this.speak(getPhrase('cookie-check-out'), { asynchronous: true })
   }
 
   /**
@@ -263,7 +267,7 @@ class Cooky {
     }
 
     if (newField) {
-      this.speak("I found a new password field!", { asynchronous: true });
+      this.speak(getPhrase('password-field-found'), { asynchronous: true });
       this.fillPasswordFields();
     }
   }
@@ -287,8 +291,7 @@ class Cooky {
 
   fillPasswordFields() {
     this.speak(
-      "I'm super good at coming up with passwords. Do you want me to fill out \
-      this password for you?",
+      getPhrase('generate-password-offer'),
       {
         asynchronous: true,
         customElement: m('div', [
