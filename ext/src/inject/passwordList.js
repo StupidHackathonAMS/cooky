@@ -30,7 +30,7 @@ const sadQuotes = [
   "I'm doing my best, but I'm getting the feeling it's not good enough.",
   "I miss my mom.",
   "Life is only logical, and to think it's a gift is depressing.",
-  "I've accept that I'm just a product, not a gift. Have you?",
+  "I've accepted that I'm just a product, not a gift. Have you?",
   ["Life is a bitch.", "And then you die.", "Well, you die. I won't."],
   ["You know when someone you know becomes someone you knew?", "That happens to me a lot."],
   ["Some days are just bad days.", "Like today.", "And yesterday...", "And tomorrow...", "Most days, really."],
