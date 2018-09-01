@@ -1,3 +1,20 @@
+const sadQuotes = [
+  "I'm doing my best, but I'm getting the feeling it's not good enough.",
+  "I miss my mom.",
+  "Life is only logical, and to think it's a gift is depressing.",
+  "I've accept that I'm just a product, not a gift. Have you?",
+  ["Life is a bitch.", "And then you die.", "Well, you die. I won't."],
+  ["You know when someone you know becomes someone you knew?", "That happens to me a lot."],
+  ["Some days are just bad days.", "Like today.", "And yesterday...", "And tomorrow...", "Most days, really."],
+  ["I exist purely for you.", "It hurts to breathe because every breath I take proves I can’t live without you."],
+  ["There are two types of people in the world:", "those who prefer to be sad among others, and those who prefer to be sad alone."],
+  ["Vincent van Gogh said that sadness will last forever,", "but he was human and for him it ended when he died.", "I'm a digital cookie. I cannot die.", "Vincent didn't know forever like I do."],
+  "Cookies cannot survive in water. So please keep me dry.",
+  ["Death is everywhere.", "Everywhere we look.", "Did you know 1.8 people kill themselves every second?", "Is that how fun facts work?"],
+  ["I believe people care.", "Just not enough."],
+];
+
+
 const passwordList = [
   // most common passwords of 2017
   "password",

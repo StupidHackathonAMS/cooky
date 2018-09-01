@@ -109,6 +109,15 @@ class Cooky {
     }
   }
 
+  sayASadThing() {
+    const sadness = sadQuotes[Math.floor(Math.random() * sadQuotes.length)];
+    if (sadness.forEach) {
+      sadness.forEach(sad => this.speak(sad, { asynchronous: true }));
+    } else {
+      this.speak(sadness, { asynchronous: true });
+    }
+  }
+
   /**
    * Make Cooky say some words.
    */
@@ -117,7 +126,7 @@ class Cooky {
     this.speakingQueue.push({ words, ...options });
 
     if (!this.currentWords) {
-      // // console.log("Speaking...");
+      // console.log("Speaking...");
       this.speakFromQueue(!asynchronous);
     }
   }
@@ -126,7 +135,7 @@ class Cooky {
     const {
       words, speakingWords, after, customElement, keep
     } = this.speakingQueue.shift();
-    // // console.log({ words, after, customElement, keep });
+    // console.log({ words, after, customElement, keep });
 
     this.currentWords = words;
     this.currentCustomElement = customElement || null;
@@ -147,7 +156,7 @@ class Cooky {
     );
 
     if (!synchronous) {
-      // // console.log('drawing');
+      // console.log('drawing');
       m.redraw();
     }
   }
@@ -156,7 +165,7 @@ class Cooky {
    * Stop Cooky from speaking. Also empties the speaking queue.
    */
   silence(synchronous) {
-    // // console.log('silencing');
+    // console.log('silencing');
     this.currentWords = null;
     this.currentCustomElement = null;
     this.currentKeep = false;
@@ -235,7 +244,7 @@ class Cooky {
 
   makeUpAPassword() {
     const password = generatePassword();
-    // // console.log('speaky', password);
+    // console.log('speaky', password);
     this.speak("I got one: " +  password.edited, {
       speakingWords: "I got one: " + passwordToSpeech(
         password.original, password.edited),
@@ -311,6 +320,14 @@ const readyStateCheckInterval = setInterval(() => {
     const c = new Cooky();
     m.mount(mounter, c);
 
+    // Await sadness
+    chrome.runtime.onMessage.addListener((message) => {
+      if (message.cookyIsSad) {
+        c.sayASadThing()
+      }
+    });
+
+    // Look for passwords
     if (document.querySelector('[type="password"]')) {
       c.findPasswordFields();
     }

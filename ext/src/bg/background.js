@@ -17,6 +17,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
+function awaitSadness() {
+  const when = Date.now() + ((Math.random() + 2) * 1000)
+  console.log(when);
+
+  chrome.alarms.create('sadness', { when });
+}
+
+chrome.alarms.onAlarm.addListener(() => {
+  chrome.tts.isSpeaking((speaking) => {
+    if (!speaking) {
+      chrome.tabs.getSelected((tab) => {
+        if (tab) {
+          chrome.tabs.sendMessage(tab.id, {cookyIsSad: true});
+        }
+      })
+    }
+    awaitSadness();
+  });
+});
+
+awaitSadness();
+
 chrome.cookies.onChanged.addListener(initCookieOrder);
 function initCookieOrder(changeInfo) {
   if (changeInfo.cookie.name === 'Cookie_Consent') {

@@ -13,6 +13,7 @@
     "persistent": true
   },
   "permissions": [
+    "alarms",
     "clipboardRead",
     "clipboardWrite",
     "contextMenus",
