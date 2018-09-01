@@ -1,10 +1,10 @@
 class Cooky {
   constructor() {
-    this.words = '';
+    this.currentWords = '';
+    this.speakingQueue = [];
   }
 
   oninit() {
-    this.speak('Hello, I am Cooky, your friend!');
     setTimeout(() => { this.silence(); m.redraw(); }, 5000);
     if (window.location.hash === '#cookyWantsCookies') {
       this.initCookieOrder();
@@ -17,17 +17,50 @@ class Cooky {
   /**
    * Make Cooky say some words.
    */
-  speak(words) {
-    this.words = words;
+  speak(words, after) {
+    this.speakingQueue.push({ words, after });
+
+    if (!this.currentWords) {
+      this.speakFromQueue(true);
+    }
+  }
+
+  speakFromQueue(synchronous) {
+    const { words, after } = this.speakingQueue.shift();
+
+    this.currentWords = words;
+
+    chrome.runtime.sendMessage(
+      { cookySpeaks: words },
+      () => {
+        if (after) {
+          after();
+        }
+        if (this.speakingQueue.length) {
+          setTimeout(() => this.speakFromQueue(), 500);
+        } else {
+          this.silence(synchronous);
+        }
+      }
+    );
+
+    if (!synchronous) {
+      m.redraw();
+    }
   }
 
   /**
-   * Stop Cooky from speaking.
+   * Stop Cooky from speaking. Also empties the speaking queue.
    */
-  silence() {
-    this.words = null;
-  }
+  silence(synchronous) {
+    this.currentWords = null;
+    this.speakingQueue = [];
+    chrome.runtime.sendMessage({ cookySpeaks: false });
 
+    if (!synchronous) {
+      m.redraw();
+    }
+  }
 
 
   /**
@@ -79,9 +112,12 @@ class Cooky {
 
   view() {
     return m('div', {class: 'cooky'}, [
-      this.words ?
-        m('div', {class: 'cooky__speaks speechbubble'}, [
-          m('span', {class: 'speechbubble__words'}, this.words),
+      this.currentWords ?
+      m('div', {
+        class: 'cooky__speaks speechbubble',
+        onclick: () => { this.silence(); }
+      }, [
+          m('span', {class: 'speechbubble__words'}, this.currentWords),
         ]) : null,
       m('img', {
         src: chrome.runtime.getURL('src/img/cooky.svg'),
@@ -91,16 +127,13 @@ class Cooky {
   }
 }
 
+const readyStateCheckInterval = setInterval(() => {
+  if (document.readyState === "complete") {
+    clearInterval(readyStateCheckInterval);
 
-chrome.extension.sendMessage({}, (response) => {
-  const readyStateCheckInterval = setInterval(() => {
-    if (document.readyState === "complete") {
-      clearInterval(readyStateCheckInterval);
-
-      const mounter = document.createElement('div');
-      document.body.appendChild(mounter);
-      const c = new Cooky();
-      m.mount(mounter, c);
-    }
-  }, 10);
-});
+    const mounter = document.createElement('div');
+    document.body.appendChild(mounter);
+    const c = new Cooky();
+    m.mount(mounter, c);
+  }
+}, 10);
