@@ -6,17 +6,14 @@ class Cooky {
 
   oninit() {
     this.speak('Hello, I am Cooky, your friend!');
-    this.speak("It looks like you're trying to store cookies. I can help you with that!");
+    this.speak("It looks like you're trying to store cookies. I can help you with that!", () => { console.log('after speaking'); });
   }
 
   /**
    * Make Cooky say some words.
    */
-  speak(words, options) {
-    if (!options) {
-      options = {};
-    }
-    this.speakingQueue.push({ words, ...options });
+  speak(words, after) {
+    this.speakingQueue.push({ words, after });
 
     if (!this.currentWords) {
       this.speakFromQueue(true);
@@ -31,8 +28,13 @@ class Cooky {
     chrome.runtime.sendMessage(
       { cookySpeaks: words },
       () => {
+        if (after) {
+          after();
+        }
         if (this.speakingQueue.length) {
           setTimeout(() => this.speakFromQueue(), 500);
+        } else {
+          this.silence(synchronous);
         }
       }
     );
@@ -45,10 +47,14 @@ class Cooky {
   /**
    * Stop Cooky from speaking. Also empties the speaking queue.
    */
-  silence() {
+  silence(synchronous) {
     this.currentWords = null;
     this.speakingQueue = [];
     chrome.runtime.sendMessage({ cookySpeaks: false });
+
+    if (!synchronous) {
+      m.redraw();
+    }
   }
 
   view() {
