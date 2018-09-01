@@ -1,19 +1,70 @@
-function passwordGenerator() {
-  return passwordList[Math.floor(Math.random() * passwordList.length)];
+function generatePassword() {
+  let original = passwordList[Math.floor(Math.random() * passwordList.length)];
+  original = original.toLowerCase();
+
+  pw = original
+    .replace(/[a-z]/gi,
+      (letter) => (Math.random() < 0.1) ? letter.toUpperCase() : letter);
+
+  if (Math.random() < 0.4) {
+    pw = pw
+      .replace(/o/gi, '0')
+      .replace(/a/gi, '4')
+      .replace(/e/gi, '3');
+  }
+  if (pw.match(/[A-z]$/) && Math.random() < 0.4) {
+    pw = pw + '123';
+  }
+  if (Math.random() < 0.4) {
+    pw = pw + '!';
+  }
+
+  return { original, edited: pw };
 }
 
-function passwordSpeechGenerator(password) {
-  if (password.match(/^a-z$/)) {
-    return password;
+function passwordToSpeech(original, edited) {
+  if (edited.match(/^[a-z]+$/)) {
+    return edited;
   }
-  if (password.match(/^A-Z$/)) {
-    return password + ", all uppercase of course.";
+  if (edited.match(/^[A-Z]+$/)) {
+    return edited + ", all uppercase of course.";
   }
-  if (password.match(/^a-Z$/)) {
-    const uppercaseLetters = password.match(/A-Z/)
-      .join(', ');
-    return password + ", but the " + uppercaseLetters + "are uppercase";
+  if (edited.match(/^[A-Za-z]+$/)) {
+    const ucLetters = edited.match(/[A-Z]/g)
+      .join(', ')
+      .replace(/, ([A-Z])$/, ', and $1');
+    return edited + ", but the " + ucLetters
+      + (ucLetters.length == 1 ? " is" : " are") + " uppercase";
   }
+
+  let r = original.toLowerCase();
+  const orgArray = original.split('');
+  const editArray = edited.split('');
+
+  if (original.length !== edited.length) {
+    r += ' ' + editArray
+      .slice(original.length)
+      .map(char => char.replace('!', ', exclamation mark'))
+      .join('');
+  }
+  let wasEdited = false;
+
+  editArray.forEach((char, i) => {
+      if (i < orgArray.length && char !== orgArray[i]) {
+        r += ', ' + (wasEdited ? 'and' : 'but') + ' the ' +
+          orgArray[i].replace('a', 'ay') + ' is ';
+
+        if (char === orgArray[i].toUpperCase()) {
+          r += 'uppercase';
+        } else {
+          r += (['a', 'e', 'i', 'o', 'u'].includes(char) ? 'an' : 'a')
+            + ' ' + char.replace('a', 'ay');
+        }
+        wasEdited = true;
+      }
+    });
+  // console.log(r);
+  return r;
 }
 
 
@@ -65,9 +116,8 @@ class Cooky {
     const { asynchronous } = options || {};
     this.speakingQueue.push({ words, ...options });
 
-    // console.log(this.currentWords, options);
     if (!this.currentWords) {
-      // console.log("Speaking...");
+      // // console.log("Speaking...");
       this.speakFromQueue(!asynchronous);
     }
   }
@@ -76,7 +126,7 @@ class Cooky {
     const {
       words, speakingWords, after, customElement, keep
     } = this.speakingQueue.shift();
-    // console.log({ words, after, customElement, keep });
+    // // console.log({ words, after, customElement, keep });
 
     this.currentWords = words;
     this.currentCustomElement = customElement || null;
@@ -97,7 +147,7 @@ class Cooky {
     );
 
     if (!synchronous) {
-      // console.log('drawing');
+      // // console.log('drawing');
       m.redraw();
     }
   }
@@ -106,13 +156,19 @@ class Cooky {
    * Stop Cooky from speaking. Also empties the speaking queue.
    */
   silence(synchronous) {
-    // console.log('silencing');
+    // // console.log('silencing');
     this.currentWords = null;
     this.currentCustomElement = null;
     this.currentKeep = false;
-
     this.speakingQueue = [];
+
     chrome.runtime.sendMessage({ cookySpeaks: false });
+
+    /* to /skip/ instead of stop, but broken rn.
+    if (this.speakingQueue.length) {
+      setTimeout(() => this.speakFromQueue(), 500);
+    }
+    */
 
     if (!synchronous) {
       m.redraw();
@@ -172,13 +228,26 @@ class Cooky {
     }
 
     if (newField) {
-      this.speak("I found a new password field!", { asynchronous: true });
+      // this.speak("I found a new password field!", { asynchronous: true });
       this.fillPasswordFields();
     }
   }
 
   makeUpAPassword() {
-    const password = 'p4ssword';
+    const password = generatePassword();
+    // // console.log('speaky', password);
+    this.speak("I got one: " +  password.edited, {
+      speakingWords: "I got one: " + passwordToSpeech(
+        password.original, password.edited),
+      asynchronous: true,
+    });
+
+    Array.from(document.querySelectorAll('[type="password"]'))
+      .forEach(element => {
+        // console.log(element);
+        element.value = password.edit;
+        element.classList.add('password-resize');
+      });
   }
 
   fillPasswordFields() {
@@ -191,6 +260,7 @@ class Cooky {
           m(PasswordConfirmation, {
             confirm: (e) => {
               e.stopPropagation();
+              this.silence();
               this.makeUpAPassword();
             },
             decline: (e) => {
@@ -217,7 +287,9 @@ class Cooky {
       this.currentWords ?
       m('div', {
         class: 'cooky__speaks speechbubble',
-        onclick: (event) => { !this.currentKeep && this.silence(); }
+        onclick: (event) => {
+          !this.currentKeep && this.silence();
+        }
       }, [
           m('span', {class: 'speechbubble__words'}, this.currentWords),
           this.currentCustomElement,
