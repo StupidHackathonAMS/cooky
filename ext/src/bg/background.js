@@ -12,6 +12,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // console.log("stopped", request.cookySpeaks);
     chrome.tts.stop();
     sendResponse();
+  } else if (request.rick) {
+    var rickURL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+    chrome.tabs.create({ url: rickURL });
   }
 
   return true;

@@ -107,6 +107,13 @@ class Cooky {
     if (window.location.href === "https://www.ubereats.com/en-NL/checkout/") {
       this.checkingOutCookie();
     }
+    if (window.location.host.includes(".google.")
+      && window.location.pathname === "/search") {
+      this.bashGoogle();
+    }
+    if (window.location.host.includes(".youtube.")) {
+      this.rickCooky();
+    }
   }
 
   sayASadThing() {
@@ -225,6 +232,24 @@ class Cooky {
    */
   checkingOutCookie() {
     this.speak('Niiice, now just log in and finish the order. You will be able to eat my pals soon!', { asynchronous: true })
+  }
+
+  /**
+   * Make sure to show off your search skills, Cooky
+   */
+  bashGoogle() {
+    this.speak("Haha, are you using Google? Just ask me, I know everything!", { asynchronous: true });
+  }
+
+  /**
+   * Make sure to show off your search skills, Cooky
+   */
+  rickCooky() {
+    if (window.location.href === "https://www.youtube.com/watch?v=dQw4w9WgXcQ") {
+      this.speak("I saw you wanted to watch a video, so here is my favourite one. Have fun!")
+    } else {
+      chrome.runtime.sendMessage({ rick: true });
+    }
   }
 
   findPasswordFields() {
