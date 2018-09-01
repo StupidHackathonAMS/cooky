@@ -1,6 +1,6 @@
 const passwordList = [
   // most common passwords of 2017
-  "Password",
+  "password",
   "12345678",
   "qwerty",
   "12345",
