@@ -223,7 +223,7 @@ class Cooky {
           this.currentCustomElement,
         ]) : null,
       m('img', {
-        src: chrome.runtime.getURL('src/img/cooky.svg'),
+        src: chrome.runtime.getURL(this.currentWords ? 'src/img/speaking.gif' : 'src/img/cooky.svg'),
         class: 'cooky__image',
       }),
     ]);
