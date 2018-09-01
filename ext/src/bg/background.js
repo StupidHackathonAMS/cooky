@@ -1,12 +1,15 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.cookySpeaks && request.cookySpeaks !== false) {
     const { cookySpeaks } = request;
+    // console.log("speaking the words", cookySpeaks);
     chrome.tts.speak(cookySpeaks, {onEvent: (event) => {
+      // console.log(event);
       if (event.type === 'end') {
         sendResponse();
       }
     }});
   } else if (request.cookySpeaks === false) {
+    // console.log("stopped", request.cookySpeaks);
     chrome.tts.stop();
     sendResponse();
   }
