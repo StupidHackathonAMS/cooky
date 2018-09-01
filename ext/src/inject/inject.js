@@ -208,11 +208,12 @@ class Cooky {
   addCookieToBasket() {
     this.speak('Great, thanks. Let me add that cookie for you, hold on.', { asynchronous: true });
     setTimeout( () => {
+      var checkoutButton = document.querySelector('button[disabled]');
       document.querySelector('[title="Triple Chocolate Cookie"]').click();
       setTimeout( () => {
         document.querySelector('.fade_ button:not(.incrementer_)').click();
         setTimeout( () => {
-          document.querySelector('[data-reactid="1026"]').click();
+          checkoutButton.click();
           this.checkingOutCookie();
         }, 100);
       }, 1000);
