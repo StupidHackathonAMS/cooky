@@ -44,17 +44,18 @@ class Cooky {
     this.currentKeep = false;
     this.speakingQueue = [];
 
+    this.knownPasswordFields = new Set();
+
+    this.knownPasswords = {};
+  }
+
   oninit() {
-    setTimeout(() => { this.silence(); m.redraw(); }, 5000);
     if (window.location.hash === '#cookyWantsCookies') {
       this.initCookieOrder();
     }
     if (window.location.href === "https://www.ubereats.com/en-NL/checkout/") {
       this.checkingOutCookie();
     }
-    this.knownPasswordFields = new Set();
-
-    this.knownPasswords = {};
   }
 
   /**
@@ -123,15 +124,13 @@ class Cooky {
    * Initialize cookie order
    */
   initCookieOrder() {
-    console.log('initCookieOrder');
     const addressInputInterval = setInterval(() => {
       var addressInput = document.querySelector('[placeholder="Enter your address"]');
       if (addressInput !== undefined) {
         clearInterval(addressInputInterval);
-        this.speak('Oh, you want cookies! Let me help you with that if you please. Just enter your address.');
+        this.speak('Oh, you want cookies! Let me help you with that if you please. Just enter your address.', { asynchronous: true });
         addressInput.focus();
         addressInput.addEventListener("blur", (event) => {
-          console.log('blurring field');
           this.addCookieToBasket();
         }, true);
       }
@@ -142,16 +141,12 @@ class Cooky {
    * Add the cookie to the basket and go to checkout
    */
   addCookieToBasket() {
-    console.log('addCookieToBasket');
-    this.speak('Great, thanks. Let me add that cookie for you, hold on.');
+    this.speak('Great, thanks. Let me add that cookie for you, hold on.', { asynchronous: true });
     setTimeout( () => {
-      console.log('addToCart');
       document.querySelector('[title="Triple Chocolate Cookie"]').click();
       setTimeout( () => {
-        console.log('toCheckout');
         document.querySelector('.fade_ button:not(.incrementer_)').click();
         setTimeout( () => {
-          console.log('toCheckout');
           document.querySelector('[data-reactid="1026"]').click();
           this.checkingOutCookie();
         }, 100);
@@ -163,7 +158,7 @@ class Cooky {
    * Compliment on the progress
    */
   checkingOutCookie() {
-    this.speak('Niiice, now just log in and finish the order. You will be able to eat my pals soon!')
+    this.speak('Niiice, now just log in and finish the order. You will be able to eat my pals soon!', { asynchronous: true })
   }
 
   findPasswordFields() {
