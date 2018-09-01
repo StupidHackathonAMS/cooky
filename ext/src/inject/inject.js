@@ -4,10 +4,7 @@ class Cooky {
     this.speakingQueue = [];
   }
 
-  oninit() {
-    this.speak('Hello, I am Cooky, your friend!');
-    this.speak("It looks like you're trying to store cookies. I can help you with that!", () => { console.log('after speaking'); });
-  }
+  oninit() {}
 
   /**
    * Make Cooky say some words.
